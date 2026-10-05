@@ -2,7 +2,8 @@
  * การยืนยันตัวตนกับ Microsoft — MSAL.js (Public client, SPA ล้วน)
  *
  * ไม่มี secret ใด ๆ ฝั่งเว็บ: แอปขอสิทธิ์ delegated จากผู้ใช้ที่ล็อกอินเอง
- * โทเคนเก็บใน sessionStorage ของเบราว์เซอร์ ปิดแท็บเมื่อไหร่ก็หายไป
+ * โทเคนเก็บใน localStorage ของเบราว์เซอร์ — อยู่ข้ามการปิด-เปิดเบราว์เซอร์
+ * (ถ้าอยากให้ล็อกอินหายทุกครั้งที่ปิดแท็บ ให้เปลี่ยนเป็น 'sessionStorage')
  */
 import {
   InteractionRequiredAuthError,
@@ -40,7 +41,8 @@ export function createMsalInstance(clientId: string): PublicClientApplication {
       postLogoutRedirectUri: appRedirectUri(),
     },
     cache: {
-      cacheLocation: 'sessionStorage',
+      // localStorage = ล็อกอินครั้งเดียว อยู่ข้ามการเปิดเบราว์เซอร์ใหม่
+      cacheLocation: 'localStorage',
       storeAuthStateInCookie: false,
     },
   };
